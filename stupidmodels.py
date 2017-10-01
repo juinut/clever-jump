@@ -27,16 +27,16 @@ class Stupid:
     def update(self, delta):
         if self.x >= self.world.width-65:
             pass
-        elif self.x > 65 and self.x <= self.world.width/2 and self.vx>0:
+        elif self.x > 65 and self.x <= self.world.width/2 and self.vx > 0:
             self.x+=self.vx
             self.y+=2
-        elif self.x> self.world.width/2 and self.x<self.world.width-65 and self.vx >0:
+        elif self.x > self.world.width/2 and self.x < self.world.width-65 and self.vx > 0:
             self.x+=self.vx
             self.y-=2
-        elif self.x >self.world.width/2 and self.x<self.world.width-65 and self.vx<0:
+        elif self.x > self.world.width/2 and self.x< self.world.width-65 and self.vx <0:
             self.x+=self.vx
             self.y+=2
-        elif self.x > 65 and self.x <= self.world.width/2 and self.vx<0:
+        elif self.x > 65 and self.x <= self.world.width/2 and self.vx <0:
             self.x+=self.vx
             self.y-=2
 
