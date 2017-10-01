@@ -12,15 +12,16 @@ class World:
         self.stupid.update(delta)
 
     def on_key_press(self, key, key_modifiers):
-        if key == arcade.key.SPACE:
-            self.stupid.switch_direction()
+        if self.stupid.x ==65 or self.stupid.x == self.width-65:
+            if key == arcade.key.SPACE:
+                self.stupid.switch_direction()
 
 class Stupid:
     def __init__(self, world, x, y):
         self.world = world
         self.x = x
         self.y = y
-        self.vx = -15
+        self.vx = -20
 
 
     def update(self, delta):

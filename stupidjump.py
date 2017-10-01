@@ -1,8 +1,8 @@
 import arcade
 from stupidmodels import World,Stupid
 
-SCREEN_WIDTH = 500
-SCREEN_HEIGHT = 675
+SCREEN_WIDTH = 530
+SCREEN_HEIGHT = 725
 
 class ModelSprite(arcade.Sprite):
     def __init__(self, *args, **kwargs):
