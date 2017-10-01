@@ -27,15 +27,20 @@ class Stupid:
     def update(self, delta):
         if self.x >= self.world.width-65:
             pass
-        elif self.x > 65:
+        elif self.x > 65 and self.x <= self.world.width/2 and self.vx>0:
             self.x+=self.vx
+            self.y+=2
+        elif self.x> self.world.width/2 and self.x<self.world.width-65 and self.vx >0:
+            self.x+=self.vx
+            self.y-=2
+        elif self.x >self.world.width/2 and self.x<self.world.width-65 and self.vx<0:
+            self.x+=self.vx
+            self.y+=2
+        elif self.x > 65 and self.x <= self.world.width/2 and self.vx<0:
+            self.x+=self.vx
+            self.y-=2
 
 
-        '''
-        if self.y > self.world.height:
-            self.y = 0
-        self.y += 5
-        '''
     def switch_direction(self):
         self.vx *= -1
         self.x += self.vx
