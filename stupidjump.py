@@ -1,5 +1,6 @@
 import arcade
-from stupidmodels import World,Stupid
+from stupidmodels import World,Stupid,Coin
+
 
 SCREEN_WIDTH = 530
 SCREEN_HEIGHT = 725
@@ -26,11 +27,16 @@ class StupidWindow(arcade.Window):
 
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.stupid_sprite = ModelSprite('images/block.png',model=self.world.stupid)
+        self.coin_sprite = ModelSprite('images/block.png',model=self.world.coin)
 
     def on_draw(self):
         arcade.start_render()
 
         self.stupid_sprite.draw()
+        self.coin_sprite.draw()
+        arcade.draw_text(str(self.world.score),
+                         self.width - 30, self.height - 30,
+                         arcade.color.WHITE, 20)
 
     def update(self, delta):
         self.world.update(delta)
