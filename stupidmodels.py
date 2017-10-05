@@ -7,19 +7,29 @@ class World:
         self.width = width
         self.height = height
         self.score = 0
+        self.endd = ""
+
 
         self.stupid = Stupid(self, 65, 100)
         self.coin = Coin(self,width/2,height/2)
+
+        self.obstacleLeft = Obstacle(self,65,height,randint(2,10))
+        self.obstacleRight = Obstacle(self,width-65,height,randint(2,10))
 
 
 
     def update(self, delta):
         self.stupid.update(delta)
         self.coin.update(delta)
+        self.obstacleRight.update(delta)
+        self.obstacleLeft.update(delta)
+
 
         if self.stupid.hit(self.coin, 25):
             self.coin.random_location()
             self.score+=1
+        if self.stupid.hit(self.obstacleLeft, 5) or self.stupid.hit(self.obstacleRight, 5):
+            self.endd = "GAME OVER"
 
     def on_key_press(self, key, key_modifiers):
         if self.stupid.x ==65 or self.stupid.x == self.width-65:
@@ -73,3 +83,16 @@ class Coin:
     def random_location(self):
         self.x = randint(65, self.world.width-65)
         self.y = self.world.height
+
+class Obstacle:
+    def __init__(self, world , x, y, vy):
+        self.world = world
+        self.x = x
+        self.y = y
+        self.vy = vy
+
+    def update(self, delta):
+        if self.y <0:
+            self.y = self.world.height
+
+        self.y-=self.vy
