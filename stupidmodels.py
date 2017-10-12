@@ -12,6 +12,7 @@ class World:
         self.time = 0
         self.time2 = 0
         self.shield = 0
+        self.gameover = 0
 
 
         self.stupid = Stupid(self, 65, 100)
@@ -71,8 +72,10 @@ class World:
             self.shield -= 1
             self.obstacleRight.y = -1
         if (self.stupid.hit(self.obstacleLeft, 35) or self.stupid.hit(self.obstacleRight, 35)) and self.shield == 0:
-            self.endd = "GAME OVER"
-            self.lastscore = self.score
+            if self.gameover ==0:
+                self.endd = "GAME OVER"
+                self.gameover = 1
+                self.lastscore = self.score
 
 
 
