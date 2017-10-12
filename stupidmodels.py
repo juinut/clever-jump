@@ -16,7 +16,7 @@ class World:
 
 
         self.stupid = Stupid(self, 65, 100)
-        self.coin = Coin(self,width/2,height/2)
+        self.coin = Coin(self,randint(80,width-80),height)
 
         self.obstacleLeft = Obstacle(self,65,height,randint(6,11))
         self.obstacleRight = Obstacle(self,width-65,height,randint(6,11))
@@ -35,7 +35,7 @@ class World:
         if self.time>randint(10,20):
             self.bonus_list.append(Bonus(self,randint(100,self.width-100),self.height,randint(5,15)))
             self.time = 0
-        if self.time2>randint(5,10):
+        if self.time2>randint(7,15):
             self.shield_list.append(Shield(self,randint(100,self.width-100),self.height,randint(5,15)))
             self.time2 = 0
 
@@ -52,7 +52,7 @@ class World:
         for index,s in enumerate(self.shield_list):
             s.update(delta)
             if self.stupid.hit(s,35):
-                if self.shield <=1:
+                if self.shield <=2:
                     self.shield+=1
                 else:
                     pass
@@ -125,11 +125,11 @@ class Coin:
     def update(self, delta):
         if self.y < 0:
             self.y = self.world.height
-            self.x = randint(65, self.world.width-65)
+            self.x = randint(80, self.world.width-80)
         self.y-=5
 
     def random_location(self):
-        self.x = randint(65, self.world.width-65)
+        self.x = randint(80, self.world.width-80)
         self.y = self.world.height
 
 class Obstacle:
@@ -142,7 +142,17 @@ class Obstacle:
     def update(self, delta):
         if self.y <0:
             self.y = self.world.height
-            self.vy = randint(5,11)
+            if self.world.score <30:
+                self.vy = randint(6,11)
+            if self.world.score >= 30:
+                self.vy = randint(9,14)
+            elif self.world.score >= 70:
+                self.vy = randint(12,17)
+            elif self.world.score >=120:
+                self.vy = randint(15,20)
+            elif self.world.score >=180:
+                self.vy = randint(18,23)
+
         self.y-=self.vy
 
 class Bonus:

@@ -64,6 +64,8 @@ class StupidWindow(arcade.Window):
                 ModelSprite('images/readbookchar.png',model = self.world.stupid).draw()
             elif self.world.shield ==2:
                 ModelSprite('images/smartchar.png',model = self.world.stupid).draw()
+            elif self.world.shield ==3:
+                ModelSprite('images/jt.png',model = self.world.stupid).draw()
 
             self.coin_sprite.draw()
             self.obstacleL_sprite.draw()
