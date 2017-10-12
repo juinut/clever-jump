@@ -18,8 +18,8 @@ class World:
         self.stupid = Stupid(self, 65, 100)
         self.coin = Coin(self,width/2,height/2)
 
-        self.obstacleLeft = Obstacle(self,65,height,randint(5,11))
-        self.obstacleRight = Obstacle(self,width-65,height,randint(5,11))
+        self.obstacleLeft = Obstacle(self,65,height,randint(6,11))
+        self.obstacleRight = Obstacle(self,width-65,height,randint(6,11))
         self.bonus_list = []
         self.shield_list = []
 

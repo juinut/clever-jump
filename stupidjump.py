@@ -32,18 +32,31 @@ class StupidWindow(arcade.Window):
         self.coin_sprite = ModelSprite('images/brand.png',model=self.world.coin)
         self.obstacleL_sprite = ModelSprite('images/weed.png',model=self.world.obstacleLeft)
         self.obstacleR_sprite = ModelSprite('images/weed.png',model=self.world.obstacleRight)
-        self.endd = arcade.create_text("GAME OVER", arcade.color.BLACK, 20)
+        self.endd = arcade.create_text("GAME OVER", arcade.color.BLACK, 30)
 
     def on_draw(self):
         arcade.start_render()
         draw_background()
 
         if self.world.endd =="GAME OVER":
-            arcade.render_text(self.endd,self.width/3, self.height/2)
+            f = open('highscore.log', 'r')
+            highscore = f.readline()
+
             arcade.draw_text("score = {}".format(str(self.world.lastscore)),
-                         self.width/2.6, self.height/3.1,
+                             self.width/3, self.height/2,
+                             arcade.color.BLACK, 25)
+            arcade.render_text(self.endd,self.width/4+10, self.height/3*2)
+
+            arcade.draw_text("Highscore = {}".format(str(highscore)),
+                         self.width/3, self.height/3,
                          arcade.color.BLACK, 20)
-            return
+            print('{} > {}'.format(self.world.lastscore,highscore))
+
+            if (int(self.world.lastscore) > int(highscore)):
+                #arcade.draw_text("New Highscore!", self.width/2,self.height/2, arcade.color.BLACK, 20)
+                f = open('highscore.log', 'w')
+                f.write(str(self.world.lastscore))
+
         else:
             if self.world.shield == 0:
                 ModelSprite('images/stupidchar.png',model = self.world.stupid).draw()
@@ -51,7 +64,7 @@ class StupidWindow(arcade.Window):
                 ModelSprite('images/readbookchar.png',model = self.world.stupid).draw()
             elif self.world.shield ==2:
                 ModelSprite('images/smartchar.png',model = self.world.stupid).draw()
-            #self.stupid_sprite.draw()
+
             self.coin_sprite.draw()
             self.obstacleL_sprite.draw()
             self.obstacleR_sprite.draw()
@@ -61,7 +74,7 @@ class StupidWindow(arcade.Window):
                 ModelSprite('images/redbook.png',model=ss).draw()
 
             arcade.draw_text(str(self.world.score),
-                         self.width - 30, self.height - 30,
+                         self.width/2, self.height - 30,
                          arcade.color.BLACK, 20)
 
 
