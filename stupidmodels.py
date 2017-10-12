@@ -7,6 +7,7 @@ class World:
         self.width = width
         self.height = height
         self.score = 0
+        self.lastscore = 0
         self.endd = ""
         self.time = 0
         self.time2 = 0
@@ -60,7 +61,7 @@ class World:
             if s.is_out_of_screen():
                 del self.shield_list[index]
 
-        if self.stupid.hit(self.coin, 25):
+        if self.stupid.hit(self.coin, 45):
             self.coin.random_location()
             self.score+=1
         if self.stupid.hit(self.obstacleLeft, 35) and self.shield > 0:
@@ -71,6 +72,7 @@ class World:
             self.obstacleRight.y = -1
         if (self.stupid.hit(self.obstacleLeft, 35) or self.stupid.hit(self.obstacleRight, 35)) and self.shield == 0:
             self.endd = "GAME OVER"
+            self.lastscore = self.score
 
 
 

@@ -37,7 +37,14 @@ class StupidWindow(arcade.Window):
     def on_draw(self):
         arcade.start_render()
         draw_background()
-        if(self.world.endd != "GAME OVER"):
+
+        if self.world.endd =="GAME OVER":
+            arcade.render_text(self.endd,self.width/3, self.height/2)
+            arcade.draw_text("score = {}".format(str(self.world.lastscore)),
+                         self.width/2.6, self.height/3.1,
+                         arcade.color.BLACK, 20)
+            return
+        else:
             if self.world.shield == 0:
                 ModelSprite('images/stupidchar.png',model = self.world.stupid).draw()
             elif self.world.shield == 1:
@@ -56,11 +63,8 @@ class StupidWindow(arcade.Window):
             arcade.draw_text(str(self.world.score),
                          self.width - 30, self.height - 30,
                          arcade.color.BLACK, 20)
-        else:
-            arcade.render_text(self.endd,self.width/3, self.height/2)
-            arcade.draw_text("score = {}".format(str(self.world.score)),
-                         self.width/2.6, self.height/3.1,
-                         arcade.color.BLACK, 20)
+
+
 
 
     def update(self, delta):
