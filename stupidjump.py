@@ -24,25 +24,34 @@ class StupidWindow(arcade.Window):
     def __init__(self, width, height):
         super().__init__(width, height)
 
-        arcade.set_background_color(arcade.color.BLUE_GRAY)
+        arcade.set_background_color(arcade.color.AERO_BLUE)
 
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.stupid_sprite = ModelSprite('images/stupidchar.png',model=self.world.stupid)
+        #self.stupid_sprite = ModelSprite('images/stupidchar.png',model=self.world.stupid)
+
         self.coin_sprite = ModelSprite('images/block.png',model=self.world.coin)
-        self.obstacleL_sprite = ModelSprite('images/fire.png',model=self.world.obstacleLeft)
-        self.obstacleR_sprite = ModelSprite('images/fire.png',model=self.world.obstacleRight)
+        self.obstacleL_sprite = ModelSprite('images/weed.png',model=self.world.obstacleLeft)
+        self.obstacleR_sprite = ModelSprite('images/weed.png',model=self.world.obstacleRight)
         self.endd = arcade.create_text("GAME OVER", arcade.color.BLACK, 20)
 
     def on_draw(self):
         arcade.start_render()
         draw_background()
         if(self.world.endd != "GAME OVER"):
-            self.stupid_sprite.draw()
+            if self.world.shield == 0:
+                ModelSprite('images/stupidchar.png',model = self.world.stupid).draw()
+            elif self.world.shield == 1:
+                ModelSprite('images/readbookchar.png',model = self.world.stupid).draw()
+            elif self.world.shield ==2:
+                ModelSprite('images/smartchar.png',model = self.world.stupid).draw()
+            #self.stupid_sprite.draw()
             self.coin_sprite.draw()
             self.obstacleL_sprite.draw()
             self.obstacleR_sprite.draw()
             for bs in self.world.bonus_list:
                 ModelSprite('images/heart.png',model=bs).draw()
+            for ss in self.world.shield_list:
+                ModelSprite('images/redbook.png',model=ss).draw()
 
             arcade.draw_text(str(self.world.score),
                          self.width - 30, self.height - 30,

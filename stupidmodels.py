@@ -9,15 +9,17 @@ class World:
         self.score = 0
         self.endd = ""
         self.time = 0
-
+        self.time2 = 0
+        self.shield = 0
 
 
         self.stupid = Stupid(self, 65, 100)
         self.coin = Coin(self,width/2,height/2)
 
-        self.obstacleLeft = Obstacle(self,65,height,randint(2,10))
-        self.obstacleRight = Obstacle(self,width-65,height,randint(2,10))
+        self.obstacleLeft = Obstacle(self,65,height,randint(5,11))
+        self.obstacleRight = Obstacle(self,width-65,height,randint(5,11))
         self.bonus_list = []
+        self.shield_list = []
 
 
     def update(self, delta):
@@ -27,24 +29,47 @@ class World:
         self.obstacleLeft.update(delta)
 
         self.time+=delta
-        if(self.time>randint(2,5)):
+        self.time2+=delta
+        if self.time>randint(10,20):
             self.bonus_list.append(Bonus(self,randint(100,self.width-100),self.height,randint(5,15)))
             self.time = 0
+        if self.time2>randint(5,10):
+            self.shield_list.append(Shield(self,randint(100,self.width-100),self.height,randint(5,15)))
+            self.time2 = 0
 
         for index,b in enumerate(self.bonus_list):
             b.update(delta)
             if self.stupid.hit(b,35):
                 self.score+=5
                 del self.bonus_list[index]
-                
-            if(b.is_out_of_screen()):
+
+            if b.is_out_of_screen():
                 del self.bonus_list[index]
 
         print(self.bonus_list)
+        for index,s in enumerate(self.shield_list):
+            s.update(delta)
+            if self.stupid.hit(s,35):
+                if self.shield <=1:
+                    self.shield+=1
+                else:
+                    pass
+
+                del self.shield_list[index]
+
+            if s.is_out_of_screen():
+                del self.shield_list[index]
+
         if self.stupid.hit(self.coin, 25):
             self.coin.random_location()
             self.score+=1
-        if self.stupid.hit(self.obstacleLeft, 35) or self.stupid.hit(self.obstacleRight, 35):
+        if self.stupid.hit(self.obstacleLeft, 35) and self.shield > 0:
+            self.shield -= 1
+            self.obstacleLeft.y = -1
+        if self.stupid.hit(self.obstacleRight, 35) and self.shield > 0:
+            self.shield -= 1
+            self.obstacleRight.y = -1
+        if (self.stupid.hit(self.obstacleLeft, 35) or self.stupid.hit(self.obstacleRight, 35)) and self.shield == 0:
             self.endd = "GAME OVER"
 
 
@@ -112,7 +137,7 @@ class Obstacle:
     def update(self, delta):
         if self.y <0:
             self.y = self.world.height
-            self.vy = randint(2,10)
+            self.vy = randint(5,11)
         self.y-=self.vy
 
 class Bonus:
@@ -136,3 +161,7 @@ class Bonus:
 
     def update(self, delta):
         self.movement()
+
+class Shield(Bonus):
+    def __init__(self, world, x, y, vy):
+        super().__init__(world, x, y, vy)
