@@ -29,7 +29,7 @@ class StupidWindow(arcade.Window):
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
         #self.stupid_sprite = ModelSprite('images/stupidchar.png',model=self.world.stupid)
 
-        self.coin_sprite = ModelSprite('images/block.png',model=self.world.coin)
+        self.coin_sprite = ModelSprite('images/brand.png',model=self.world.coin)
         self.obstacleL_sprite = ModelSprite('images/weed.png',model=self.world.obstacleLeft)
         self.obstacleR_sprite = ModelSprite('images/weed.png',model=self.world.obstacleRight)
         self.endd = arcade.create_text("GAME OVER", arcade.color.BLACK, 20)
@@ -49,7 +49,7 @@ class StupidWindow(arcade.Window):
             self.obstacleL_sprite.draw()
             self.obstacleR_sprite.draw()
             for bs in self.world.bonus_list:
-                ModelSprite('images/heart.png',model=bs).draw()
+                ModelSprite('images/peptein.png',model=bs).draw()
             for ss in self.world.shield_list:
                 ModelSprite('images/redbook.png',model=ss).draw()
 
