@@ -23,6 +23,7 @@ class ModelSprite(arcade.Sprite):
 class StupidWindow(arcade.Window):
     def __init__(self, width, height):
         super().__init__(width, height)
+        self.time = 0
 
         arcade.set_background_color(arcade.color.AERO_BLUE)
 
@@ -33,10 +34,23 @@ class StupidWindow(arcade.Window):
         self.obstacleL_sprite = ModelSprite('images/weed.png',model=self.world.obstacleLeft)
         self.obstacleR_sprite = ModelSprite('images/weed.png',model=self.world.obstacleRight)
         self.endd = arcade.create_text("GAME OVER", arcade.color.BLACK, 30)
+        self.cloud1_sprite = ModelSprite('images/cloud3.png',model = self.world.cloud1)
+        self.cloud2_sprite = ModelSprite('images/cloud3.png',model = self.world.cloud2)
+        self.cloud3_sprite = ModelSprite('images/cloud3.png',model = self.world.cloud3)
+        self.cloud4_sprite = ModelSprite('images/cloud3.png',model = self.world.cloud4)
+        self.cloud5_sprite = ModelSprite('images/cloud3.png',model = self.world.cloud5)
+        self.house_sprite = ModelSprite('images/building.png',model = self.world.house)
 
     def on_draw(self):
         arcade.start_render()
+        self.cloud1_sprite.draw()
+        self.cloud2_sprite.draw()
+        self.cloud3_sprite.draw()
+        self.cloud4_sprite.draw()
+        self.cloud5_sprite.draw()
+        self.house_sprite.draw()
         draw_background()
+
 
         if self.world.endd =="GAME OVER":
             f = open('highscore.log', 'r')
@@ -53,7 +67,6 @@ class StupidWindow(arcade.Window):
             print('{} > {}'.format(self.world.lastscore,highscore))
 
             if (int(self.world.lastscore) > int(highscore)):
-                #arcade.draw_text("New Highscore!", self.width/2,self.height/2, arcade.color.BLACK, 20)
                 f = open('highscore.log', 'w')
                 f.write(str(self.world.lastscore))
 
@@ -84,6 +97,7 @@ class StupidWindow(arcade.Window):
 
     def update(self, delta):
         self.world.update(delta)
+        self.time+=delta
 
     def on_key_press(self, key, key_modifiers):
         self.world.on_key_press(key, key_modifiers)

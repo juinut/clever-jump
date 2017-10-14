@@ -17,6 +17,13 @@ class World:
 
         self.stupid = Stupid(self, 65, 100)
         self.coin = Coin(self,randint(80,width-80),height)
+        self.house = House(self,width/2,250)
+        self.cloud1 = Cloud(self,100,height+200)
+        self.cloud2 = Cloud(self,500,height+350)
+        self.cloud3 = Cloud(self,200,height+500)
+        self.cloud4 = Cloud(self,400,height+650)
+        self.cloud5 = Cloud(self,300,height+800)
+
 
         self.obstacleLeft = Obstacle(self,65,height,randint(6,11))
         self.obstacleRight = Obstacle(self,width-65,height,randint(6,11))
@@ -29,6 +36,12 @@ class World:
         self.coin.update(delta)
         self.obstacleRight.update(delta)
         self.obstacleLeft.update(delta)
+        self.house.update(delta)
+        self.cloud1.update(delta)
+        self.cloud2.update(delta)
+        self.cloud3.update(delta)
+        self.cloud4.update(delta)
+        self.cloud5.update(delta)
 
         self.time+=delta
         self.time2+=delta
@@ -100,16 +113,16 @@ class Stupid(World):
             pass
         elif self.x > 65 and self.x <= self.world.width/2 and self.vx > 0:
             self.x+=self.vx
-            self.y+=2
+            self.y+=2.5
         elif self.x > self.world.width/2 and self.x < self.world.width-65 and self.vx > 0:
             self.x+=self.vx
-            self.y-=2
+            self.y-=2.5
         elif self.x > self.world.width/2 and self.x< self.world.width-65 and self.vx <0:
             self.x+=self.vx
-            self.y+=2
+            self.y+=2.5
         elif self.x > 65 and self.x <= self.world.width/2 and self.vx < 0:
             self.x+=self.vx
-            self.y-=2
+            self.y-=2.5
 
 
     def switch_direction(self):
@@ -144,14 +157,17 @@ class Obstacle:
             self.y = self.world.height
             if self.world.score <30:
                 self.vy = randint(6,11)
-            if self.world.score >= 30:
+            elif self.world.score < 70:
                 self.vy = randint(9,14)
-            elif self.world.score >= 70:
+            elif self.world.score <120:
                 self.vy = randint(12,17)
-            elif self.world.score >=120:
+            elif self.world.score <180:
                 self.vy = randint(15,20)
-            elif self.world.score >=180:
+            elif self.world.score <250:
                 self.vy = randint(18,23)
+            else:
+                self.vy = randint(21,26)
+
 
         self.y-=self.vy
 
@@ -180,3 +196,26 @@ class Bonus:
 class Shield(Bonus):
     def __init__(self, world, x, y, vy):
         super().__init__(world, x, y, vy)
+
+class House:
+    def __init__(self, world, x, y):
+        self.world = world
+        self.x = x
+        self.y = y
+
+    def update(self, delta):
+        self.y -= 1
+
+class Cloud:
+    def __init__(self, world, x, y):
+        self.world = world
+        self.x = x
+        self.y = y
+
+    def update(self, delta):
+        if self.y < -75:
+            self.y = self.world.height+75
+            self.x +=100
+        self.y-=0.75
+        if self.x > self.world.width:
+            self.x = -25
